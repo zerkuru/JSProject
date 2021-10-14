@@ -180,6 +180,26 @@ const app = new Vue({
             xhr.open('GET', url, true);
             xhr.send();
         },
+        makePOSTRequest(url, data, callback) {
+            let xhr;
+
+            if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest();
+            } else if (window.ActiveXObject) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    callback(xhr.responseText);
+                }
+            }
+
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+            xhr.send(data);
+        },
         addshoppingitem() {
 
             this.makeGETRequest(`${API_URL}/addToBasket.json `, (shoppinglist) => {
@@ -198,12 +218,11 @@ const app = new Vue({
             });
         },
 
-        mounted() {
-            this.makeGETRequest(`${API_URL}/catalogData.json`, (goods) => {
-                this.goods = goods;
-                this.filteredGoods = goods;
-            })
-        }
+        mounted()  this.makeGETRequest(`/catalogData`, (goods) => {
+            this.goods = JSON.parse(goods);
+            this.filteredGoods = JSON.parse(goods);
+        }),
+
 
     }
 })
