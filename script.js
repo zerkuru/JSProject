@@ -182,6 +182,7 @@ const app = new Vue({
         },
         makePOSTRequest(url, data, callback) {
             let xhr;
+            const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
             if (window.XMLHttpRequest) {
                 xhr = new XMLHttpRequest();
@@ -261,13 +262,5 @@ Vue.component('goods-item', {
 });
 
 
-const list = new GoodsList();
-list.fetchGoods(() => {
-    list.render();
-});
-let searchButton = document.querySelector("search-button");
-searchButton.addEventListener('click', (e) => {
-    const value = searchInput.value;
-    list.filterGoods(value);
-});
+
 
